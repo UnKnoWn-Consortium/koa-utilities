@@ -17,7 +17,6 @@ export class JWT {
         if (!token) {
             throw Error("There is no token to consume");
         }
-
     }
 }
 
