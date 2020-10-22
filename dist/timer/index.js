@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * Koa timer middleware factory
+ * Koa Utilities
+ * Created by Thomas Sham on 20/9/2020.
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 async function timer(ctx, next) {
     const start = Date.now();

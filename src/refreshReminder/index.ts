@@ -1,3 +1,9 @@
+/**
+ * Koa refresh reminder middleware factory
+ * Koa Utilities
+ * Created by Thomas Sham on 20/9/2020.
+ */
+
 function refreshReminderFactory () {
     return async function refreshReminder (
         ctx,

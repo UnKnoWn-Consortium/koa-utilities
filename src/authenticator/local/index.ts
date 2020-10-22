@@ -1,6 +1,6 @@
 /**
  * Koa local authenticator middleware factory
- * User Service Koa
+ * Koa Utilities
  * Created by Thomas Sham on 12/9/2020.
  */
 

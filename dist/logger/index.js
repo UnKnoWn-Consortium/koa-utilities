@@ -1,16 +1,11 @@
 "use strict";
 /**
- * Koa logger middleware
- * Prerender Service
+ * Koa logger middleware factory
+ * Koa Utilities
  * Created by Thomas Sham on 26/6/2020.
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Winston_1 = __importDefault(require("./lib/Winston"));
-function loggerFactory(ServiceName) {
-    const loggerInstance = Winston_1.default(ServiceName);
+function loggerFactory(loggerInstance) {
     return async function loggerWare(ctx, next) {
         await next();
         const { ip, method, url, } = ctx;

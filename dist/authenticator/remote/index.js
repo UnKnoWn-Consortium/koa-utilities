@@ -1,7 +1,7 @@
 "use strict";
 /**
  * Koa remote authenticator middleware factory
- * User Service Koa
+ * Koa Utilities
  * Created by Thomas Sham on 2/10/2020.
  */
 var __importDefault = (this && this.__importDefault) || function (mod) {

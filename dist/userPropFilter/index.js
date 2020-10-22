@@ -1,7 +1,7 @@
 "use strict";
 /**
- * Koa user role filter middleware factory
- * User Service Koa
+ * Koa user role filter factory
+ * Koa Utilities
  * Created by Thomas Sham on 20/9/2020.
  */
 Object.defineProperty(exports, "__esModule", { value: true });

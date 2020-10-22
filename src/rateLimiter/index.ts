@@ -1,6 +1,6 @@
 /**
  * Koa rate limiter middleware factory
- * Prerender Service
+ * Koa Utilities
  * Created by Thomas Sham on 26/6/2020.
  */
 

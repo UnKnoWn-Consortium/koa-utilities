@@ -1,4 +1,8 @@
 export {
+    default as fixedAuthenticatorFactory
+} from "./fixed";
+
+export {
     default as localAuthenticatorFactory
 } from "./local";
 

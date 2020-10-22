@@ -1,7 +1,12 @@
 export {
+    fixedAuthenticatorFactory as fixedAuthenticator,
     localAuthenticatorFactory as localAuthenticator,
     remoteAuthenticatorFactory as remoteAuthenticator,
 } from "./authenticator";
+
+export {
+    default as imageTransformer
+} from "./imageTransformer";
 
 export {
     default as logger

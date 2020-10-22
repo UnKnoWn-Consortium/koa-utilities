@@ -1,13 +1,12 @@
 /**
- * Koa logger middleware
- * Prerender Service
+ * Koa logger middleware factory
+ * Koa Utilities
  * Created by Thomas Sham on 26/6/2020.
  */
 
-import logger from "./lib/Winston";
-
-function loggerFactory (ServiceName) {
-    const loggerInstance = logger(ServiceName);
+function loggerFactory (
+    loggerInstance
+) {
     return async function loggerWare (
         ctx,
         next
