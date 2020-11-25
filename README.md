@@ -72,7 +72,7 @@ app.use(refreshReminder());
 
 ### Timer Koa Middleware
 
-This timer middleware does not need a factory. 
+This timer middleware does not have a factory. 
 The default export is the Koa middleware itself. 
 
 ```javascript
@@ -84,4 +84,12 @@ app.use(timer);
 
 ```javascript
 
+```
+
+### Sentry Tracing Middleware
+https://docs.sentry.io/platforms/node/guides/koa/
+
+```javascript
+import sentryTracer from "koa-utilities/dist/sentry/tracer";
+app.use(sentryTracer(<Sentry_DSN>)); 
 ```

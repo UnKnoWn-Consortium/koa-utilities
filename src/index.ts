@@ -27,3 +27,7 @@ export {
 export {
     default as userPropFilter
 } from "./userPropFilter";
+
+export {
+    default as sentryTracer
+} from "./sentry/tracer";

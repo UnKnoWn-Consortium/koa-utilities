@@ -1,6 +1,6 @@
 {
   "name": "koa-utilities",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "",
   "main": "dist/index.js",
@@ -13,6 +13,8 @@
   "author": "OblonDATA.IO Limited <contact@oblondata.io>",
   "license": "MIT",
   "dependencies": {
+    "@sentry/node": "^5.27.6",
+    "@sentry/tracing": "^5.27.6",
     "fluent-logger": "^3.4.1",
     "got": "^11.8.0",
     "jsonwebtoken": "^8.5.1",
