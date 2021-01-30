@@ -52,7 +52,7 @@ export function remoteAuthenticatorFactory (
 
         if (!(response.statusCode >= 200 && response.statusCode < 300)) {
             console.error(response.body);
-            ctx.throw(500, response.body);
+            ctx.throw(response.statusCode, response.body);
             throw response.body;
         }
 

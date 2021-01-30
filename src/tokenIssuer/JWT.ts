@@ -1,3 +1,5 @@
+// TODO: IT IS A WORK-IN-PROGRESS
+
 import JWT from "jsonwebtoken";
 
 export class JWT {
@@ -17,6 +19,8 @@ export class JWT {
         if (!token) {
             throw Error("There is no token to consume");
         }
+
+
     }
 }
 

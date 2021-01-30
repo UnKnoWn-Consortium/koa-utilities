@@ -4,7 +4,7 @@
  * Created by Thomas Sham on 12/9/2020.
  */
 
-import PASETO from "../lib/TokenIssuer/PASETO";
+import PASETO from "../../tokenIssuer/PASETO";
 
 export function localAuthenticatorFactory (
     PasetoKey: string

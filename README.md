@@ -23,6 +23,28 @@ import authenticator from "koa-utilities/dist/authenticator/remote";
 authenticator(<REMOTE_PATH>); 
 ```
 
+### Token Issuer
+
+* PASETO Token
+
+```javascript
+import Issuer from "koa-utilities/dist/tokenIssuer/PASETO";
+const pasetoIssuer = new Issuer(
+    <PASETO_HEX_KEY>,
+    () => ({})
+);
+```
+
+* JSON Web Token (Work-in-Progress)
+
+```javascript
+import Issuer from "koa-utilities/dist/tokenIssuer/JWT";
+const jwtIssuer = new Issuer(
+    <JWT_KEY>,
+    () => ({})
+);
+```
+
 ### Image Transformer
 
 ```javascript

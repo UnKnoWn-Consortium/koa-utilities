@@ -5,6 +5,10 @@ export {
 } from "./authenticator";
 
 export {
+
+} from "./tokenIssuer";
+
+export {
     default as imageTransformer
 } from "./imageTransformer";
 
