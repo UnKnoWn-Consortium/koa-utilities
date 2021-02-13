@@ -7,7 +7,8 @@
 import PASETO from "../../tokenIssuer/PASETO";
 
 export function localAuthenticatorFactory (
-    PasetoKey: string
+    PasetoKey: string,
+    acceptQueryString: string | boolean = false,
 ) {
     if (!PasetoKey) {
         throw "paseto key required";
@@ -22,19 +23,21 @@ export function localAuthenticatorFactory (
         ctx,
         next
     ) {
-        if (!ctx.header.authorization) {
-            ctx.throw(401);
-            return;
-        }
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
 
         if (!match) {
-            ctx.throw(401);
-            return;
+            if (!acceptQueryString) {
+                ctx.throw(401);
+                return;
+            }
+            if (!ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
+                ctx.throw(401);
+                return;
+            }
         }
 
-        ctx.state.token = match[1];
+        ctx.state.token = match?.[1] ?? ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
 
         let user;
         try {

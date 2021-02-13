@@ -7,7 +7,8 @@
 import got from "got";
 
 export function remoteAuthenticatorFactory (
-    path: string
+    path: string,
+    acceptQueryString: string | boolean = false,
 ) {
     if (!path) {
         throw "path for remote authentication required";
@@ -17,19 +18,21 @@ export function remoteAuthenticatorFactory (
         ctx,
         next
     ) {
-        if (!ctx.header.authorization) {
-            ctx.throw(401);
-            return;
-        }
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
 
         if (!match) {
-            ctx.throw(401);
-            return;
+            if (!acceptQueryString) {
+                ctx.throw(401);
+                return;
+            }
+            if (!ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
+                ctx.throw(401);
+                return;
+            }
         }
 
-        ctx.state.token = match[1];
+        ctx.state.token = match?.[1] ?? ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
 
         let response;
         try {

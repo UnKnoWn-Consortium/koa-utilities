@@ -11,12 +11,18 @@ authenticator(<FIXED_TOKEN>);
 
 * Local PASETO token
 
+It also accepts a second augment at ```acceptQueryString``` that controls whether 
+token appended as query string is accepted as backup. 
+
 ```javascript
 import authenticator from "koa-utilities/dist/authenticator/local"; 
-authenticator(<PASETO_TOKEN>); 
+authenticator(<PASETO_TOKEN>, acceptQueryString: boolean); 
 ```
 
 * Remote PASETO token
+
+It also accepts a second augment at ```acceptQueryString``` that controls whether 
+token appended as query string is accepted as backup.
 
 ```javascript
 import authenticator from "koa-utilities/dist/authenticator/remote"; 
