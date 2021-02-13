@@ -41,7 +41,7 @@ export function localAuthenticatorFactory (
 
         let user;
         try {
-            user = await tokenIssuer.consume(match[1]);
+            user = await tokenIssuer.consume(ctx.state.token);
         } catch ({ message }) {
             ctx.throw(400, message);
             return;

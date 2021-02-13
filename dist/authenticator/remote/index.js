@@ -36,7 +36,7 @@ function remoteAuthenticatorFactory(path, acceptQueryString = false) {
                 "headers": {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${match[1]}`
+                    "Authorization": `Bearer ${ctx.state.token}`
                 },
             });
         }

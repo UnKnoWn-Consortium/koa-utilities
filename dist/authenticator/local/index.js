@@ -32,7 +32,7 @@ function localAuthenticatorFactory(PasetoKey, acceptQueryString = false) {
         ctx.state.token = (_a = match === null || match === void 0 ? void 0 : match[1]) !== null && _a !== void 0 ? _a : ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
         let user;
         try {
-            user = await tokenIssuer.consume(match[1]);
+            user = await tokenIssuer.consume(ctx.state.token);
         }
         catch ({ message }) {
             ctx.throw(400, message);

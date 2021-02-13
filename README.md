@@ -4,6 +4,9 @@
 
 * Fixed token
 
+It also accepts a second augment at ```acceptQueryString``` that controls whether
+token appended as query string is accepted as backup.
+
 ```javascript
 import authenticator from "koa-utilities/dist/authenticator/fixed"; 
 authenticator(<FIXED_TOKEN>); 

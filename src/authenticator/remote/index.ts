@@ -43,7 +43,7 @@ export function remoteAuthenticatorFactory (
                     "headers": {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${ match[1] }`
+                        "Authorization": `Bearer ${ ctx.state.token }`
                     },
                 }
             );
