@@ -8,6 +8,7 @@ import got from "got";
 
 export function remoteAuthenticatorFactory (
     path: string,
+    acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
 ) {
     if (!path) {
@@ -22,17 +23,23 @@ export function remoteAuthenticatorFactory (
         const match = regex.exec(ctx.header.authorization);
 
         if (!match) {
-            if (!acceptQueryString) {
-                ctx.throw(401);
-                return;
-            }
-            if (!ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
-                ctx.throw(401);
-                return;
+            if (
+                !acceptCookie ||
+                !ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")
+            ) {
+                if (
+                    !acceptQueryString ||
+                    !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]
+                ) {
+                    ctx.throw(401);
+                    return;
+                }
             }
         }
 
-        ctx.state.token = match?.[1] ?? ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
+        ctx.state.token = match?.[1] ??
+            ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization") ??
+            ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
 
         let response;
         try {

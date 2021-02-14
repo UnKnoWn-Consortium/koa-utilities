@@ -4,32 +4,32 @@
 
 * Fixed token
 
-It also accepts a second augment at ```acceptQueryString``` that controls whether
-token appended as query string is accepted as backup.
+It also accepts a second and a third augment at ```acceptCookie``` and ```acceptQueryString``` that controls whether
+token included in cookie and then appended as query string is accepted as backup.
 
 ```javascript
 import authenticator from "koa-utilities/dist/authenticator/fixed"; 
-authenticator(<FIXED_TOKEN>); 
+authenticator(<FIXED_TOKEN>, acceptCookie: boolean, acceptQueryString: boolean); 
 ```
 
 * Local PASETO token
 
-It also accepts a second augment at ```acceptQueryString``` that controls whether 
-token appended as query string is accepted as backup. 
+It also accepts a second and a third augment at ```acceptCookie``` and ```acceptQueryString``` that controls whether 
+token included in cookie and then appended as query string is accepted as backup. 
 
 ```javascript
 import authenticator from "koa-utilities/dist/authenticator/local"; 
-authenticator(<PASETO_TOKEN>, acceptQueryString: boolean); 
+authenticator(<PASETO_TOKEN>, acceptCookie: boolean, acceptQueryString: boolean); 
 ```
 
 * Remote PASETO token
 
-It also accepts a second augment at ```acceptQueryString``` that controls whether 
-token appended as query string is accepted as backup.
+It also accepts a second and a third augment at ```acceptCookie``` and ```acceptQueryString``` that controls whether 
+token included in cookie and then appended as query string is accepted as backup.
 
 ```javascript
 import authenticator from "koa-utilities/dist/authenticator/remote"; 
-authenticator(<REMOTE_PATH>); 
+authenticator(<REMOTE_PATH>, acceptCookie: boolean, acceptQueryString: boolean); 
 ```
 
 ### Token Issuer
