@@ -23,7 +23,7 @@ const defaultFormats = [
     ["avif", {}]
 ];
 function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormats, saveOriginal = false) {
-    return function transformerBuilder(parentStream) {
+    return function transformerBuilder(parentStream, originalExtension) {
         const origin = parentStream.pipe(new stream_1.PassThrough());
         const pipes = sizes
             .map(size => [sharp_1.default().resize(size), size])
@@ -41,7 +41,9 @@ function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormat
         });
         if (saveOriginal === true) {
             pipes.push([
-                [parentStream.pipe(new stream_1.PassThrough())],
+                [
+                    [parentStream.pipe(new stream_1.PassThrough()), originalExtension !== null && originalExtension !== void 0 ? originalExtension : ""]
+                ],
                 "original"
             ]);
         }

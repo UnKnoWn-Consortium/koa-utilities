@@ -27,7 +27,10 @@ export function transformerBuilderFactory (
     formats = defaultFormats,
     saveOriginal: boolean = false,
 ) {
-    return function transformerBuilder (parentStream) {
+    return function transformerBuilder (
+        parentStream,
+        originalExtension: string
+    ) {
         const origin = parentStream.pipe(new PassThrough());
         const pipes = sizes
             .map(
@@ -55,7 +58,9 @@ export function transformerBuilderFactory (
         if (saveOriginal === true) {
             pipes.push(
                 [
-                    [parentStream.pipe(new PassThrough())],
+                    [
+                        [parentStream.pipe(new PassThrough()), originalExtension ?? ""]
+                    ],
                     "original"
                 ]
             );
