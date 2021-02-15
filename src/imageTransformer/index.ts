@@ -5,17 +5,26 @@
  */
 
 /**
- * const sizes = [320, 800, 1200, 2400]
+ * const sizes = [320, 480, 800, 1200, 2400]
  */
 
-const sharp = require("sharp");
+import sharp from "sharp";
+
+const defaultSizes = [
+    480, 800, 1200,
+];
+
+const defaultFormats: [string, any][] = [
+    ["jpg", {}],
+    ["webp", {}],
+    ["avif", {}]
+];
 
 export function transformerBuilderFactory (
-    sizes
+    sizes: number[] = defaultSizes,
+    formats = defaultFormats,
 ) {
-    return function transformerBuilder (
-        parentStream
-    ) {
+    return function transformerBuilder (parentStream) {
         return sizes
             .map(
                 size => [sharp().resize(size), size]
@@ -24,52 +33,17 @@ export function transformerBuilderFactory (
                 ([resizer, size]) => {
                     parentStream.pipe(resizer);
                     return [
-                        [
-                            [
+                        formats.map(
+                            ([format, options]) => [
                                 resizer
                                     .clone()
                                     .toFormat(
-                                        "jpg",
-                                        {
-                                            //"lossless": true,
-                                        },
+                                        format,
+                                        options,
                                     ),
-                                "jpg"
-                            ],
-                            [
-                                resizer
-                                    .clone()
-                                    .toFormat(
-                                        "png",
-                                        {
-                                            //"lossless": true,
-                                        },
-                                    ),
-                                "png"
-                            ],
-                            [
-                                resizer
-                                    .clone()
-                                    .toFormat(
-                                        "webp",
-                                        {
-                                            //"lossless": true,
-                                        },
-                                    ),
-                                "webp"
-                            ],
-                            /*[
-                                resizer
-                                    .clone()
-                                    .toFormat(
-                                        "heif",
-                                        {
-                                            "compression": "av1",
-                                        },
-                                    ),
-                                "heif"
-                            ],*/
-                        ],
+                                format
+                            ]
+                        ),
                         size
                     ];
                 }

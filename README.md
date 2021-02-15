@@ -57,6 +57,7 @@ const jwtIssuer = new Issuer(
 ### Image Transformer
 
 ```javascript
+const transformerBuilder = transformerBuilderFactory(sizes, formats); 
 const promises = transformerBuilder(stream)
     .reduce(
         (acc, [ transformers, size ]) => acc.concat(
