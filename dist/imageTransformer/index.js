@@ -12,6 +12,7 @@ exports.transformerBuilderFactory = void 0;
 /**
  * const sizes = [320, 480, 800, 1200, 2400]
  */
+const stream_1 = require("stream");
 const sharp_1 = __importDefault(require("sharp"));
 const defaultSizes = [
     480, 800, 1200,
@@ -21,12 +22,13 @@ const defaultFormats = [
     ["webp", {}],
     ["avif", {}]
 ];
-function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormats) {
+function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormats, saveOriginal = false) {
     return function transformerBuilder(parentStream) {
-        return sizes
+        const origin = parentStream.pipe(new stream_1.PassThrough());
+        const pipes = sizes
             .map(size => [sharp_1.default().resize(size), size])
             .map(([resizer, size]) => {
-            parentStream.pipe(resizer);
+            origin.pipe(resizer);
             return [
                 formats.map(([format, options]) => [
                     resizer
@@ -37,6 +39,13 @@ function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormat
                 size
             ];
         });
+        if (saveOriginal === true) {
+            pipes.push([
+                [parentStream.pipe(new stream_1.PassThrough())],
+                "original"
+            ]);
+        }
+        return pipes;
     };
 }
 exports.transformerBuilderFactory = transformerBuilderFactory;

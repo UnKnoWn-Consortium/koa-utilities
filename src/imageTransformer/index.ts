@@ -8,6 +8,8 @@
  * const sizes = [320, 480, 800, 1200, 2400]
  */
 
+import { PassThrough } from "stream";
+
 import sharp from "sharp";
 
 const defaultSizes = [
@@ -23,15 +25,17 @@ const defaultFormats: [string, any][] = [
 export function transformerBuilderFactory (
     sizes: number[] = defaultSizes,
     formats = defaultFormats,
+    saveOriginal: boolean = false,
 ) {
     return function transformerBuilder (parentStream) {
-        return sizes
+        const origin = parentStream.pipe(new PassThrough());
+        const pipes = sizes
             .map(
                 size => [sharp().resize(size), size]
             )
             .map(
                 ([resizer, size]) => {
-                    parentStream.pipe(resizer);
+                    origin.pipe(resizer);
                     return [
                         formats.map(
                             ([format, options]) => [
@@ -47,7 +51,16 @@ export function transformerBuilderFactory (
                         size
                     ];
                 }
-            )
+            );
+        if (saveOriginal === true) {
+            pipes.push(
+                [
+                    [parentStream.pipe(new PassThrough())],
+                    "original"
+                ]
+            );
+        }
+        return pipes;
     }
 }
 
