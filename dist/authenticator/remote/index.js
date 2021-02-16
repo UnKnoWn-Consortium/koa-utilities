@@ -24,7 +24,7 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
                 !ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) {
                 if (!acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
-                    throwErr(401);
+                    await throwErr(401);
                     return;
                 }
             }
@@ -43,12 +43,12 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         }
         catch (e) {
             console.error(e);
-            throwErr(500);
+            await throwErr(500);
             return;
         }
         if (!(response.statusCode >= 200 && response.statusCode < 300)) {
             console.error(response.body);
-            throwErr(response.statusCode, response.body);
+            await throwErr(response.statusCode, response.body);
             return;
         }
         let user;
@@ -57,7 +57,7 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         }
         catch (e) {
             console.error(e);
-            throwErr(500);
+            await throwErr(500);
             return;
         }
         ctx.state.user = user;

@@ -38,7 +38,7 @@ export function localAuthenticatorFactory (
                     !acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]
                 ) {
-                    throwErr(401);
+                    await throwErr(401);
                     return;
                 }
             }
@@ -52,7 +52,7 @@ export function localAuthenticatorFactory (
         try {
             user = await tokenIssuer.consume(ctx.state.token);
         } catch ({ message }) {
-            throwErr(400, message);
+            await throwErr(400, message);
             return;
         }
 

@@ -20,14 +20,14 @@ function fixedAuthenticatorFactory(token, acceptCookie = false, acceptQueryStrin
                 !ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) {
                 if (!acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
-                    throwErr(401);
+                    await throwErr(401);
                     return;
                 }
             }
         }
         ctx.state.token = (_b = (_a = match === null || match === void 0 ? void 0 : match[1]) !== null && _a !== void 0 ? _a : ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) !== null && _b !== void 0 ? _b : ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
         if (token !== ctx.state.token) {
-            throwErr(401);
+            await throwErr(401);
             return;
         }
         await next();

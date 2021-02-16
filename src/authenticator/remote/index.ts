@@ -33,7 +33,7 @@ export function remoteAuthenticatorFactory (
                     !acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]
                 ) {
-                    throwErr(401);
+                    await throwErr(401);
                     return;
                 }
             }
@@ -58,13 +58,13 @@ export function remoteAuthenticatorFactory (
             );
         } catch (e) {
             console.error(e);
-            throwErr(500);
+            await throwErr(500);
             return;
         }
 
         if (!(response.statusCode >= 200 && response.statusCode < 300)) {
             console.error(response.body);
-            throwErr(response.statusCode, response.body);
+            await throwErr(response.statusCode, response.body);
             return;
         }
 
@@ -73,7 +73,7 @@ export function remoteAuthenticatorFactory (
             user = JSON.parse(response.body);
         } catch (e) {
             console.error(e);
-            throwErr(500);
+            await throwErr(500);
             return;
         }
 

@@ -31,7 +31,7 @@ export function fixedAuthenticatorFactory (
                     !acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]
                 ) {
-                    throwErr(401);
+                    await throwErr(401);
                     return;
                 }
             }
@@ -42,7 +42,7 @@ export function fixedAuthenticatorFactory (
             ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
 
         if (token !== ctx.state.token) {
-            throwErr(401);
+            await throwErr(401);
             return;
         }
 

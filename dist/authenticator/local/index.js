@@ -25,7 +25,7 @@ function localAuthenticatorFactory(PasetoKey, acceptCookie = false, acceptQueryS
                 !ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) {
                 if (!acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
-                    throwErr(401);
+                    await throwErr(401);
                     return;
                 }
             }
@@ -36,7 +36,7 @@ function localAuthenticatorFactory(PasetoKey, acceptCookie = false, acceptQueryS
             user = await tokenIssuer.consume(ctx.state.token);
         }
         catch ({ message }) {
-            throwErr(400, message);
+            await throwErr(400, message);
             return;
         }
         ctx.state.user = user;
