@@ -10,13 +10,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.localAuthenticatorFactory = void 0;
 const PASETO_1 = __importDefault(require("../../tokenIssuer/PASETO"));
-function localAuthenticatorFactory(PasetoKey, acceptCookie = false, acceptQueryString = false) {
+function localAuthenticatorFactory(PasetoKey, acceptCookie = false, acceptQueryString = false, errorHandler) {
     if (!PasetoKey) {
         throw "paseto key required";
     }
     const tokenIssuer = new PASETO_1.default(PasetoKey, () => ({}));
     return async function authenticator(ctx, next) {
         var _a, _b;
+        const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
         if (!match) {
@@ -24,7 +25,7 @@ function localAuthenticatorFactory(PasetoKey, acceptCookie = false, acceptQueryS
                 !ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) {
                 if (!acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
-                    ctx.throw(401);
+                    throwErr(401);
                     return;
                 }
             }
@@ -35,7 +36,7 @@ function localAuthenticatorFactory(PasetoKey, acceptCookie = false, acceptQueryS
             user = await tokenIssuer.consume(ctx.state.token);
         }
         catch ({ message }) {
-            ctx.throw(400, message);
+            throwErr(400, message);
             return;
         }
         ctx.state.user = user;

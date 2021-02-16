@@ -10,6 +10,7 @@ export function localAuthenticatorFactory (
     PasetoKey: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
+    errorHandler: Function,
 ) {
     if (!PasetoKey) {
         throw "paseto key required";
@@ -24,6 +25,7 @@ export function localAuthenticatorFactory (
         ctx,
         next
     ) {
+        const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
 
@@ -36,7 +38,7 @@ export function localAuthenticatorFactory (
                     !acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]
                 ) {
-                    ctx.throw(401);
+                    throwErr(401);
                     return;
                 }
             }
@@ -50,7 +52,7 @@ export function localAuthenticatorFactory (
         try {
             user = await tokenIssuer.consume(ctx.state.token);
         } catch ({ message }) {
-            ctx.throw(400, message);
+            throwErr(400, message);
             return;
         }
 

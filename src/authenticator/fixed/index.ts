@@ -8,6 +8,7 @@ export function fixedAuthenticatorFactory (
     token: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
+    errorHandler: Function,
 ) {
     if (!token) {
         throw "token required";
@@ -17,6 +18,7 @@ export function fixedAuthenticatorFactory (
         ctx,
         next
     ) {
+        const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
 
@@ -29,7 +31,7 @@ export function fixedAuthenticatorFactory (
                     !acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]
                 ) {
-                    ctx.throw(401);
+                    throwErr(401);
                     return;
                 }
             }
@@ -40,7 +42,7 @@ export function fixedAuthenticatorFactory (
             ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
 
         if (token !== ctx.state.token) {
-            ctx.throw(401);
+            throwErr(401);
             return;
         }
 

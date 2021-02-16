@@ -10,12 +10,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.remoteAuthenticatorFactory = void 0;
 const got_1 = __importDefault(require("got"));
-function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryString = false) {
+function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryString = false, errorHandler) {
     if (!path) {
         throw "path for remote authentication required";
     }
     return async function authenticator(ctx, next) {
         var _a, _b;
+        const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
         if (!match) {
@@ -23,7 +24,7 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
                 !ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) {
                 if (!acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]) {
-                    ctx.throw(401);
+                    throwErr(401);
                     return;
                 }
             }
@@ -42,13 +43,13 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         }
         catch (e) {
             console.error(e);
-            ctx.throw(500);
-            throw e;
+            throwErr(500);
+            return;
         }
         if (!(response.statusCode >= 200 && response.statusCode < 300)) {
             console.error(response.body);
-            ctx.throw(response.statusCode, response.body);
-            throw response.body;
+            throwErr(response.statusCode, response.body);
+            return;
         }
         let user;
         try {
@@ -56,8 +57,8 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         }
         catch (e) {
             console.error(e);
-            ctx.throw(500);
-            throw "REMOTE AUTH error";
+            throwErr(500);
+            return;
         }
         ctx.state.user = user;
         await next();

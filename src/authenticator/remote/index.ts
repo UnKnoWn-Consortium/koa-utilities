@@ -10,6 +10,7 @@ export function remoteAuthenticatorFactory (
     path: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
+    errorHandler: Function,
 ) {
     if (!path) {
         throw "path for remote authentication required";
@@ -19,6 +20,7 @@ export function remoteAuthenticatorFactory (
         ctx,
         next
     ) {
+        const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
 
@@ -31,7 +33,7 @@ export function remoteAuthenticatorFactory (
                     !acceptQueryString ||
                     !ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"]
                 ) {
-                    ctx.throw(401);
+                    throwErr(401);
                     return;
                 }
             }
@@ -56,14 +58,14 @@ export function remoteAuthenticatorFactory (
             );
         } catch (e) {
             console.error(e);
-            ctx.throw(500);
-            throw e;
+            throwErr(500);
+            return;
         }
 
         if (!(response.statusCode >= 200 && response.statusCode < 300)) {
             console.error(response.body);
-            ctx.throw(response.statusCode, response.body);
-            throw response.body;
+            throwErr(response.statusCode, response.body);
+            return;
         }
 
         let user;
@@ -71,8 +73,8 @@ export function remoteAuthenticatorFactory (
             user = JSON.parse(response.body);
         } catch (e) {
             console.error(e);
-            ctx.throw(500);
-            throw "REMOTE AUTH error";
+            throwErr(500);
+            return;
         }
 
         ctx.state.user = user;
