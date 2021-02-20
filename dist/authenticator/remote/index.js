@@ -43,24 +43,17 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         }
         catch (e) {
             console.error(e);
-            await throwErr(500);
+            await throwErr(e.response.statusCode, e.response.body);
             return;
         }
-        if (!(response.statusCode >= 200 && response.statusCode < 300)) {
-            console.error(response.body);
-            await throwErr(response.statusCode, response.body);
-            return;
-        }
-        let user;
         try {
-            user = JSON.parse(response.body);
+            ctx.state.user = JSON.parse(response.body);
         }
         catch (e) {
             console.error(e);
             await throwErr(500);
             return;
         }
-        ctx.state.user = user;
         await next();
     };
 }
