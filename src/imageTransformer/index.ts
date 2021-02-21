@@ -56,7 +56,7 @@ export function transformerBuilderFactory (
                 }
             );
         if (saveOriginal === true) {
-            pipes.push(
+            pipes.unshift(
                 [
                     [
                         [parentStream.pipe(new PassThrough()), originalExtension ?? ""]

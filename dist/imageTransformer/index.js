@@ -40,7 +40,7 @@ function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormat
             ];
         });
         if (saveOriginal === true) {
-            pipes.push([
+            pipes.unshift([
                 [
                     [parentStream.pipe(new stream_1.PassThrough()), originalExtension !== null && originalExtension !== void 0 ? originalExtension : ""]
                 ],
