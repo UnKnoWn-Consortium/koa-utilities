@@ -9,10 +9,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.transformerBuilderFactory = void 0;
-/**
- * const sizes = [320, 480, 800, 1200, 2400]
- */
-const stream_1 = require("stream");
 const sharp_1 = __importDefault(require("sharp"));
 const defaultSizes = [
     480, 800, 1200,
@@ -24,7 +20,7 @@ const defaultFormats = [
 ];
 function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormats, saveOriginal = false) {
     return function transformerBuilder(parentStream, originalExtension) {
-        const origin = parentStream.pipe(new stream_1.PassThrough());
+        const origin = parentStream /*.pipe(new PassThrough())*/;
         const pipes = sizes
             .map(size => [sharp_1.default().resize(size), size])
             .map(([resizer, size]) => {
@@ -42,7 +38,7 @@ function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormat
         if (saveOriginal === true) {
             pipes.unshift([
                 [
-                    [parentStream.pipe(new stream_1.PassThrough()), originalExtension !== null && originalExtension !== void 0 ? originalExtension : ""]
+                    [parentStream /*.pipe(new PassThrough())*/, originalExtension !== null && originalExtension !== void 0 ? originalExtension : ""]
                 ],
                 "original"
             ]);

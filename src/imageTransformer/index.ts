@@ -31,7 +31,7 @@ export function transformerBuilderFactory (
         parentStream,
         originalExtension: string
     ) {
-        const origin = parentStream.pipe(new PassThrough());
+        const origin = parentStream/*.pipe(new PassThrough())*/;
         const pipes = sizes
             .map(
                 size => [sharp().resize(size), size]
@@ -59,7 +59,7 @@ export function transformerBuilderFactory (
             pipes.unshift(
                 [
                     [
-                        [parentStream.pipe(new PassThrough()), originalExtension ?? ""]
+                        [parentStream/*.pipe(new PassThrough())*/, originalExtension ?? ""]
                     ],
                     "original"
                 ]
