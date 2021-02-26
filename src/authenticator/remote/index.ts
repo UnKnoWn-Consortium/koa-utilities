@@ -57,7 +57,7 @@ export function remoteAuthenticatorFactory (
                 }
             );
         } catch (e) {
-            console.error(e);
+            //console.error(e);
             await throwErr(e.response.statusCode, e.response.body);
             return;
         }
@@ -65,7 +65,7 @@ export function remoteAuthenticatorFactory (
         try {
             ctx.state.user = JSON.parse(response.body);
         } catch (e) {
-            console.error(e);
+            //console.error(e);
             await throwErr(500);
             return;
         }
