@@ -4,26 +4,26 @@ import { promisify } from "util";
 import stream from "stream";
 const pipeline = promisify(stream.pipeline);
 
-function imageSaverFactory (
+function imageSaver (
     files: any,
     location: string = "./data",
     targetId: string,
 ) {
-    return async () => {
-        if (
-            !Array.isArray(files) ||
-            files.length === 0
-        ) {
-            return [];
-        }
+    if (
+        !Array.isArray(files) ||
+        files.length === 0
+    ) {
+        return [];
+    }
 
-        return Promise.all(
-            files
-                .filter(
-                    ({ detectedMimeType }) => detectedMimeType.includes("image/")
-                )
-                .map(
-                    ({ stream, detectedFileExtension }, ind) => pipeline(
+    return Promise.all(
+        files
+            .filter(
+                ({ detectedMimeType }) => detectedMimeType.includes("image/")
+            )
+            .map(
+                async ({ stream, detectedFileExtension }, ind) => {
+                    await pipeline(
                         stream,
                         fs.createWriteStream(
                             resolve(
@@ -31,10 +31,14 @@ function imageSaverFactory (
                                 `${ targetId }_${ String(ind + 1).padStart(2, "0") }.original.${ detectedFileExtension }`
                             )
                         )
-                    )
-                )
-        );
-    };
+                    );
+                    return resolve(
+                        location,
+                        `${ targetId }_${ String(ind + 1).padStart(2, "0") }.original.${ detectedFileExtension }`
+                    );
+                }
+            )
+    );
 }
 
-export default imageSaverFactory;
+export default imageSaver;
