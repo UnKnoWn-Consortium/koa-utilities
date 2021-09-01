@@ -30,8 +30,8 @@ function sentryTracerFactory(dsn) {
     return async function sentryTracer(ctx, next) {
         var _a;
         const reqMethod = (ctx.method || "").toUpperCase();
-        const reqUrl = ctx.url && tracing_1.stripUrlQueryAndFragment(ctx.url);
-        const transaction = Sentry.startTransaction(Object.assign({ "name": `${reqMethod} ${reqUrl}`, "op": "http.server" }, ((_a = tracing_1.extractTraceparentData(ctx.request.get("sentry-trace"))) !== null && _a !== void 0 ? _a : {})));
+        const reqUrl = ctx.url && (0, tracing_1.stripUrlQueryAndFragment)(ctx.url);
+        const transaction = Sentry.startTransaction(Object.assign({ "name": `${reqMethod} ${reqUrl}`, "op": "http.server" }, ((_a = (0, tracing_1.extractTraceparentData)(ctx.request.get("sentry-trace"))) !== null && _a !== void 0 ? _a : {})));
         ctx.__sentry_transaction = transaction;
         await next();
         // if using koa router, a nicer way to capture transaction using the matched route

@@ -4,69 +4,57 @@
  * Created by Thomas Sham on 22/10/2020.
  */
 
+// !!DEPRECATED IN FAVOR OF https://github.com/OblonDATA-IO/image-transformer-pipeline
+
 /**
  * const sizes = [320, 480, 800, 1200, 2400]
  */
 
-import { PassThrough } from "stream";
-
 import sharp from "sharp";
 
-const defaultSizes = [
+const DefaultSizes = [
     480, 800, 1200,
 ];
 
-const defaultFormats: [string, any][] = [
+const DefaultFormats: [string, any][] = [
     ["jpg", {}],
     ["webp", {}],
     ["avif", {}]
 ];
 
-export function transformerBuilderFactory (
-    sizes: number[] = defaultSizes,
-    formats = defaultFormats,
-    saveOriginal: boolean = false,
-) {
-    return function transformerBuilder (
-        parentStream,
-        originalExtension: string
-    ) {
-        const origin = parentStream/*.pipe(new PassThrough())*/;
-        const pipes = sizes
-            .map(
-                size => [sharp().resize(size), size]
-            )
-            .map(
-                ([resizer, size]) => {
-                    origin.pipe(resizer);
-                    return [
-                        formats.map(
-                            ([format, options]) => [
-                                resizer
-                                    .clone()
-                                    .toFormat(
-                                        format,
-                                        options,
-                                    ),
-                                format
-                            ]
-                        ),
-                        size
-                    ];
-                }
-            );
-        if (saveOriginal === true) {
-            pipes.unshift(
-                [
-                    [
-                        [parentStream/*.pipe(new PassThrough())*/, originalExtension ?? ""]
-                    ],
-                    "original"
-                ]
-            );
-        }
-        return pipes;
-    }
+const DefaultOptions: any = {
+    failOnError: false,
 }
 
-export default transformerBuilderFactory;
+export function transformStreamBuilderFactory (
+    sizes: number[] = DefaultSizes,
+    formats = DefaultFormats,
+    options = DefaultOptions,
+) {
+    const srcStream = sharp(options);
+    const destStreams = sizes
+        .map(
+            size => [srcStream.clone().resize(size), size]
+        )
+        .map(
+            ([resizer, size]) => {
+                return [
+                    formats.map(
+                        ([format, options]) => [
+                            resizer
+                                .clone()
+                                .toFormat(
+                                    format,
+                                    options,
+                                ),
+                            format
+                        ]
+                    ),
+                    size
+                ];
+            }
+        );
+    return [srcStream, destStreams];
+}
+
+export default transformStreamBuilderFactory;

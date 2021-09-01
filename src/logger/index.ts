@@ -13,24 +13,14 @@ function loggerFactory (
     ) {
         await next();
 
-        const {
-            ip,
-            method,
-            url,
-        } = ctx;
+        const { ip, method, url, status, } = ctx;
         const processTime: string = ctx.response.get("X-Response-Time");
         const userAgent: string = ctx.request.header["user-agent"];
 
         loggerInstance.log(
             "info",
-            `${ ip } ${ method } ${ url } ${ userAgent } ${ processTime }`,
-            {
-                ip,
-                method,
-                url,
-                processTime,
-                userAgent,
-            },
+            `${ ip } ${ method } ${ url } ${ status } ${ userAgent } ${ processTime }`,
+            { ip, method, url, status, processTime, userAgent, },
         );
     }
 }

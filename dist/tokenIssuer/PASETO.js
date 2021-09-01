@@ -10,7 +10,7 @@ const { "V2": { encrypt, decrypt, } } = paseto_1.default;
 class PASETO {
     constructor(secretKey, defaults) {
         const key = Buffer.from(secretKey, "hex");
-        this.secretKey = crypto_1.createSecretKey(key);
+        this.secretKey = (0, crypto_1.createSecretKey)(key);
         this.defaults = defaults;
     }
     async produce(payload) {

@@ -8,43 +8,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transformerBuilderFactory = void 0;
+exports.transformStreamBuilderFactory = void 0;
+// !!DEPRECATED IN FAVOR OF https://github.com/OblonDATA-IO/image-transformer-pipeline
+/**
+ * const sizes = [320, 480, 800, 1200, 2400]
+ */
 const sharp_1 = __importDefault(require("sharp"));
-const defaultSizes = [
+const DefaultSizes = [
     480, 800, 1200,
 ];
-const defaultFormats = [
+const DefaultFormats = [
     ["jpg", {}],
     ["webp", {}],
     ["avif", {}]
 ];
-function transformerBuilderFactory(sizes = defaultSizes, formats = defaultFormats, saveOriginal = false) {
-    return function transformerBuilder(parentStream, originalExtension) {
-        const origin = parentStream /*.pipe(new PassThrough())*/;
-        const pipes = sizes
-            .map(size => [sharp_1.default().resize(size), size])
-            .map(([resizer, size]) => {
-            origin.pipe(resizer);
-            return [
-                formats.map(([format, options]) => [
-                    resizer
-                        .clone()
-                        .toFormat(format, options),
-                    format
-                ]),
-                size
-            ];
-        });
-        if (saveOriginal === true) {
-            pipes.unshift([
-                [
-                    [parentStream /*.pipe(new PassThrough())*/, originalExtension !== null && originalExtension !== void 0 ? originalExtension : ""]
-                ],
-                "original"
-            ]);
-        }
-        return pipes;
-    };
+const DefaultOptions = {
+    failOnError: false,
+};
+function transformStreamBuilderFactory(sizes = DefaultSizes, formats = DefaultFormats, options = DefaultOptions) {
+    const srcStream = (0, sharp_1.default)(options);
+    const destStreams = sizes
+        .map(size => [srcStream.clone().resize(size), size])
+        .map(([resizer, size]) => {
+        return [
+            formats.map(([format, options]) => [
+                resizer
+                    .clone()
+                    .toFormat(format, options),
+                format
+            ]),
+            size
+        ];
+    });
+    return [srcStream, destStreams];
 }
-exports.transformerBuilderFactory = transformerBuilderFactory;
-exports.default = transformerBuilderFactory;
+exports.transformStreamBuilderFactory = transformStreamBuilderFactory;
+exports.default = transformStreamBuilderFactory;

@@ -32,7 +32,7 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         ctx.state.token = (_b = (_a = match === null || match === void 0 ? void 0 : match[1]) !== null && _a !== void 0 ? _a : ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) !== null && _b !== void 0 ? _b : ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
         let response;
         try {
-            response = await got_1.default(path, {
+            response = await (0, got_1.default)(path, {
                 "method": "GET",
                 "headers": {
                     "Accept": "application/json",
