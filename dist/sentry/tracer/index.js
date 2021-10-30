@@ -28,10 +28,13 @@ function sentryTracerFactory(dsn) {
         "tracesSampleRate": 1.0,
     });
     return async function sentryTracer(ctx, next) {
-        var _a;
         const reqMethod = (ctx.method || "").toUpperCase();
         const reqUrl = ctx.url && (0, tracing_1.stripUrlQueryAndFragment)(ctx.url);
-        const transaction = Sentry.startTransaction(Object.assign({ "name": `${reqMethod} ${reqUrl}`, "op": "http.server" }, ((_a = (0, tracing_1.extractTraceparentData)(ctx.request.get("sentry-trace"))) !== null && _a !== void 0 ? _a : {})));
+        const transaction = Sentry.startTransaction({
+            "name": `${reqMethod} ${reqUrl}`,
+            "op": "http.server",
+            ...((0, tracing_1.extractTraceparentData)(ctx.request.get("sentry-trace")) ?? {}), // connect to trace of upstream app
+        });
         ctx.__sentry_transaction = transaction;
         await next();
         // if using koa router, a nicer way to capture transaction using the matched route

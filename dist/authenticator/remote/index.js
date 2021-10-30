@@ -15,7 +15,6 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         throw "path for remote authentication required";
     }
     return async function authenticator(ctx, next) {
-        var _a, _b;
         const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header.authorization);
@@ -29,7 +28,9 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
                 }
             }
         }
-        ctx.state.token = (_b = (_a = match === null || match === void 0 ? void 0 : match[1]) !== null && _a !== void 0 ? _a : ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) !== null && _b !== void 0 ? _b : ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
+        ctx.state.token = match?.[1] ??
+            ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization") ??
+            ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
         let response;
         try {
             response = await (0, got_1.default)(path, {
