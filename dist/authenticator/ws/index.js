@@ -18,7 +18,7 @@ function remoteWSAuthenticatorFactory(path, acceptCookie = false, acceptQueryStr
     return async function authenticator(request) {
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(request.headers.authorization || "");
-        const parsedUrl = new URL(request.url);
+        const parsedUrl = new URL(request.url, `https://${request.headers.host}`);
         const query = parsedUrl.searchParams;
         const cookies = cookie_1.default.parse(request.headers.cookie || "");
         if (!match) {

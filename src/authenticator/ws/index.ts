@@ -21,7 +21,7 @@ export function remoteWSAuthenticatorFactory (
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(request.headers.authorization || "");
 
-        const parsedUrl = new URL(request.url);
+        const parsedUrl = new URL(request.url, `https://${ request.headers.host }`);
         const query = parsedUrl.searchParams;
         const cookies = cookie.parse(request.headers.cookie || "");
 
