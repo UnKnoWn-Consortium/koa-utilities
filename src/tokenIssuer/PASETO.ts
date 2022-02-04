@@ -1,8 +1,4 @@
-import {
-    KeyObject,
-    createSecretKey,
-} from "crypto";
-
+import { KeyObject, createSecretKey, } from "crypto";
 import paseto from "paseto";
 const {
     "V2": {
@@ -35,9 +31,7 @@ export class PASETO {
         this.defaults = defaults;
     }
 
-    async produce (
-        payload,
-    ) {
+    async produce (payload) {
         return await encrypt(
             Object.assign(
                 {},
@@ -48,9 +42,7 @@ export class PASETO {
         );
     }
 
-    async consume (
-        token: string
-    ) {
+    async consume (token: string) {
         if (!token) {
             throw Error("There is no token to consume");
         }
