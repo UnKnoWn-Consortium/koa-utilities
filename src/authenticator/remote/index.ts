@@ -57,7 +57,7 @@ export function remoteAuthenticatorFactory (
                 }
             );
         } catch (e) {
-            //console.error(e);
+            console.error(e);
             await throwErr(e.response.statusCode, e.response.body);
             return;
         }

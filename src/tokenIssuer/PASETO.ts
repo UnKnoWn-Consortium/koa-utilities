@@ -1,4 +1,5 @@
 import { KeyObject, createSecretKey, } from "crypto";
+// @ts-ignore
 import paseto from "paseto";
 const {
     "V2": {
