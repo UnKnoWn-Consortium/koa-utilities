@@ -7,5 +7,5 @@ import { Middleware, DefaultState } from "koa";
 interface State extends DefaultState {
     user: any;
 }
-export declare function remoteAuthenticatorFactory(path: string, acceptCookie: string | boolean | undefined, acceptQueryString: string | boolean | undefined, errorHandler: Function): Middleware<State>;
+export declare function remoteAuthenticatorFactory(path: string, acceptCookie?: string | boolean, acceptQueryString?: string | boolean, errorHandler?: Function): Middleware<State>;
 export default remoteAuthenticatorFactory;

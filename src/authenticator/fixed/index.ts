@@ -10,16 +10,13 @@ export function fixedAuthenticatorFactory (
     token: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
-    errorHandler: Function,
+    errorHandler?: Function,
 ): Middleware {
     if (!token) {
         throw "token required";
     }
 
-    return async function authenticator (
-        ctx,
-        next,
-    ) {
+    return async function authenticator (ctx, next) {
         const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(ctx.header?.authorization ?? "");

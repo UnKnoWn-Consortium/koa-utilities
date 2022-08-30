@@ -12,7 +12,7 @@ export function localAuthenticatorFactory (
     PasetoKey: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
-    errorHandler: Function,
+    errorHandler?: Function,
 ): Middleware {
     if (!PasetoKey) {
         throw "paseto key required";

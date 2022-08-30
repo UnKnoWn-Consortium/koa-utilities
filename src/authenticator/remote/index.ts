@@ -16,7 +16,7 @@ export function remoteAuthenticatorFactory (
     path: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
-    errorHandler: Function,
+    errorHandler?: Function,
 ): Middleware<State> {
     if (!path) {
         throw "path for remote authentication required";
