@@ -33,6 +33,7 @@ function transformStreamBuilderFactory(sizes = DefaultSizes, formats = DefaultFo
         return [
             formats.map(([format, options]) => [
                 resizer
+                    // @ts-ignore
                     .clone()
                     .toFormat(format, options),
                 format
@@ -44,3 +45,4 @@ function transformStreamBuilderFactory(sizes = DefaultSizes, formats = DefaultFo
 }
 exports.transformStreamBuilderFactory = transformStreamBuilderFactory;
 exports.default = transformStreamBuilderFactory;
+//# sourceMappingURL=index.js.map

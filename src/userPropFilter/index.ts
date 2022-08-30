@@ -4,10 +4,9 @@
  * Created by Thomas Sham on 20/9/2020.
  */
 
-export function userPropFilterFactory (
-    path = "state.user",
-    inValues: any
-) {
+import { Middleware, } from "koa";
+
+export function userPropFilterFactory (path = "state.user", inValues: any): Middleware {
     /*if (!inValues){
         throw Error("value has to be a string or an array");
     }*/
@@ -16,10 +15,7 @@ export function userPropFilterFactory (
         inValues = [inValues];
     }
 
-    return async function userPropFilter (
-        ctx,
-        next
-    ) {
+    return async function userPropFilter (ctx, next): Promise<void> {
         let target = ctx;
         for (let i = 0; i < path.split(".").length; i++) {
             target = target[path.split(".")[i]];

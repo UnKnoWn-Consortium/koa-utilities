@@ -4,23 +4,25 @@
  * Created by Thomas Sham on 22/10/2020.
  */
 
+import { Middleware, } from "koa";
+
 export function fixedAuthenticatorFactory (
     token: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
     errorHandler: Function,
-) {
+): Middleware {
     if (!token) {
         throw "token required";
     }
 
     return async function authenticator (
         ctx,
-        next
+        next,
     ) {
         const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
-        const match = regex.exec(ctx.header.authorization);
+        const match = regex.exec(ctx.header?.authorization ?? "");
 
         if (!match) {
             if (

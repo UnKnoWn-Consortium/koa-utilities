@@ -12,3 +12,4 @@ var remote_1 = require("./remote");
 Object.defineProperty(exports, "remoteAuthenticatorFactory", { enumerable: true, get: function () { return __importDefault(remote_1).default; } });
 var ws_1 = require("./ws");
 Object.defineProperty(exports, "remoteWSAuthenticatorFactory", { enumerable: true, get: function () { return __importDefault(ws_1).default; } });
+//# sourceMappingURL=index.js.map

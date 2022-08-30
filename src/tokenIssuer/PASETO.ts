@@ -22,7 +22,7 @@ export class PASETO {
         this.defaults = defaults;
     }
 
-    produce (payload) {
+    produce (payload: any) {
         return sign(Object.assign({}, this.defaults(), payload), this.secretKey);
     }
 

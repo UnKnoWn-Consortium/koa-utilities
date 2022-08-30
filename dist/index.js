@@ -22,3 +22,4 @@ var userPropFilter_1 = require("./userPropFilter");
 Object.defineProperty(exports, "userPropFilter", { enumerable: true, get: function () { return __importDefault(userPropFilter_1).default; } });
 var tracer_1 = require("./sentry/tracer");
 Object.defineProperty(exports, "sentryTracer", { enumerable: true, get: function () { return __importDefault(tracer_1).default; } });
+//# sourceMappingURL=index.js.map

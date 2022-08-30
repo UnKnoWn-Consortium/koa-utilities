@@ -4,14 +4,16 @@
  * Created by Thomas Sham on 12/9/2020.
  */
 
-import PASETO from "../../tokenIssuer/PASETO";
+import { Middleware, } from "koa";
+
+import PASETO from "../../tokenIssuer/PASETO.js";
 
 export function localAuthenticatorFactory (
     PasetoKey: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
     errorHandler: Function,
-) {
+): Middleware {
     if (!PasetoKey) {
         throw "paseto key required";
     }
@@ -21,13 +23,10 @@ export function localAuthenticatorFactory (
         () => ({})
     );
 
-    return async function authenticator (
-        ctx,
-        next
-    ) {
+    return async function authenticator (ctx, next) {
         const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
-        const match = regex.exec(ctx.header.authorization);
+        const match = regex.exec(ctx.header?.authorization ?? "");
 
         if (!match) {
             if (

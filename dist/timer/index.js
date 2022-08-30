@@ -12,3 +12,4 @@ async function timer(ctx, next) {
     ctx.set("X-Response-Time", `${ms}ms`);
 }
 exports.default = timer;
+//# sourceMappingURL=index.js.map

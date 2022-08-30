@@ -21,3 +21,4 @@ function imageSaver(files, location = "./data", targetId) {
     }));
 }
 exports.default = imageSaver;
+//# sourceMappingURL=index.js.map

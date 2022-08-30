@@ -48,6 +48,7 @@ function remoteWSAuthenticatorFactory(path, acceptCookie = false, acceptQueryStr
         }
         catch (e) {
             //console.error(e);
+            // @ts-ignore
             await errorHandler(e?.response?.statusCode ?? 500, e?.response?.body ?? "");
             return;
         }
@@ -55,3 +56,4 @@ function remoteWSAuthenticatorFactory(path, acceptCookie = false, acceptQueryStr
 }
 exports.remoteWSAuthenticatorFactory = remoteWSAuthenticatorFactory;
 exports.default = remoteWSAuthenticatorFactory;
+//# sourceMappingURL=index.js.map

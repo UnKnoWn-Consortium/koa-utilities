@@ -11,3 +11,4 @@ function rateLimiterFactory() {
     };
 }
 exports.default = rateLimiterFactory;
+//# sourceMappingURL=index.js.map

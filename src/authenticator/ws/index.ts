@@ -11,13 +11,13 @@ export function remoteWSAuthenticatorFactory (
     path: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
-    errorHandler: Function = (e) => { throw e; },
+    errorHandler: Function = (e: any) => { throw e; },
 ) {
     if (!path) {
         throw "path for remote authentication required";
     }
 
-    return async function authenticator (request) {
+    return async function authenticator (request: any) {
         const regex = new RegExp("Bearer (.+)");
         const match = regex.exec(request.headers.authorization || "");
 
@@ -60,6 +60,7 @@ export function remoteWSAuthenticatorFactory (
             return JSON.parse(response.body);
         } catch (e) {
             //console.error(e);
+            // @ts-ignore
             await errorHandler(e?.response?.statusCode ?? 500, e?.response?.body ?? "");
             return;
         }

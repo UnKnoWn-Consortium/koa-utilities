@@ -24,3 +24,4 @@ class PASETO {
 }
 exports.PASETO = PASETO;
 exports.default = PASETO;
+//# sourceMappingURL=PASETO.js.map

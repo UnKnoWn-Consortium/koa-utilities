@@ -13,7 +13,7 @@ function fixedAuthenticatorFactory(token, acceptCookie = false, acceptQueryStrin
     return async function authenticator(ctx, next) {
         const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
-        const match = regex.exec(ctx.header.authorization);
+        const match = regex.exec(ctx.header?.authorization ?? "");
         if (!match) {
             if (!acceptCookie ||
                 !ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization")) {
@@ -36,3 +36,4 @@ function fixedAuthenticatorFactory(token, acceptCookie = false, acceptQueryStrin
 }
 exports.fixedAuthenticatorFactory = fixedAuthenticatorFactory;
 exports.default = fixedAuthenticatorFactory;
+//# sourceMappingURL=index.js.map

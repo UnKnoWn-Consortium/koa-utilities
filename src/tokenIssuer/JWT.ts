@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { KeyObject, createSecretKey, } from "crypto";
 import JWT from "jsonwebtoken";
 

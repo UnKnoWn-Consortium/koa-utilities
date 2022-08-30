@@ -4,25 +4,28 @@
  * Created by Thomas Sham on 2/10/2020.
  */
 
+import { Middleware, DefaultState, } from "koa";
+
 import got from "got";
+
+interface State extends DefaultState {
+    user: any;
+}
 
 export function remoteAuthenticatorFactory (
     path: string,
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
     errorHandler: Function,
-) {
+): Middleware<State> {
     if (!path) {
         throw "path for remote authentication required";
     }
 
-    return async function authenticator (
-        ctx,
-        next
-    ) {
+    return async function authenticator (ctx, next) {
         const throwErr = errorHandler || ctx.throw;
         const regex = new RegExp("Bearer (.+)");
-        const match = regex.exec(ctx.header.authorization);
+        const match = regex.exec(ctx.header?.authorization ?? "");
 
         if (!match) {
             if (
@@ -58,6 +61,7 @@ export function remoteAuthenticatorFactory (
             );
         } catch (e) {
             console.error(e);
+            // @ts-ignore
             await throwErr(e.response.statusCode, e.response.body);
             return;
         }

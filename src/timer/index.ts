@@ -4,9 +4,11 @@
  * Created by Thomas Sham on 20/9/2020.
  */
 
+import { ParameterizedContext, DefaultState, DefaultContext, Next, } from "koa";
+
 async function timer (
-    ctx,
-    next
+    ctx: ParameterizedContext<DefaultState, DefaultContext, any>,
+    next: Next
 ) {
     const start: number = Date.now();
     await next();

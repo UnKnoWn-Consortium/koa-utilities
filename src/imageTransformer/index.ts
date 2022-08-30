@@ -42,6 +42,7 @@ export function transformStreamBuilderFactory (
                     formats.map(
                         ([format, options]) => [
                             resizer
+                                // @ts-ignore
                                 .clone()
                                 .toFormat(
                                     format,

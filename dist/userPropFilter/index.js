@@ -27,3 +27,4 @@ function userPropFilterFactory(path = "state.user", inValues) {
 }
 exports.userPropFilterFactory = userPropFilterFactory;
 exports.default = userPropFilterFactory;
+//# sourceMappingURL=index.js.map
