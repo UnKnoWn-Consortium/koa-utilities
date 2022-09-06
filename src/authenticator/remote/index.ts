@@ -8,7 +8,7 @@ import { Middleware, DefaultState, } from "koa";
 
 import got from "got";
 
-interface State extends DefaultState {
+export interface RequestState extends DefaultState {
     user: any;
 }
 
@@ -17,7 +17,7 @@ export function remoteAuthenticatorFactory (
     acceptCookie: string | boolean = false,
     acceptQueryString: string | boolean = false,
     errorHandler?: Function,
-): Middleware<State> {
+): Middleware<RequestState> {
     if (!path) {
         throw "path for remote authentication required";
     }

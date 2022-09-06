@@ -6,11 +6,11 @@
 
 import { Middleware, DefaultState } from "koa";
 
-interface State extends DefaultState {
+export interface RequestState extends DefaultState {
     user: any
 }
 
-function refreshReminderFactory (): Middleware<State> {
+function refreshReminderFactory (): Middleware<RequestState> {
     return async function refreshReminder (ctx, next): Promise<void> {
         await next();
         const { user, } = ctx.state;

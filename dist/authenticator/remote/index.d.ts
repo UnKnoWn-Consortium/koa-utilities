@@ -4,8 +4,8 @@
  * Created by Thomas Sham on 2/10/2020.
  */
 import { Middleware, DefaultState } from "koa";
-interface State extends DefaultState {
+export interface RequestState extends DefaultState {
     user: any;
 }
-export declare function remoteAuthenticatorFactory(path: string, acceptCookie?: string | boolean, acceptQueryString?: string | boolean, errorHandler?: Function): Middleware<State>;
+export declare function remoteAuthenticatorFactory(path: string, acceptCookie?: string | boolean, acceptQueryString?: string | boolean, errorHandler?: Function): Middleware<RequestState>;
 export default remoteAuthenticatorFactory;

@@ -4,8 +4,8 @@
  * Created by Thomas Sham on 20/9/2020.
  */
 import { Middleware, DefaultState } from "koa";
-interface State extends DefaultState {
+export interface RequestState extends DefaultState {
     user: any;
 }
-declare function refreshReminderFactory(): Middleware<State>;
+declare function refreshReminderFactory(): Middleware<RequestState>;
 export default refreshReminderFactory;
