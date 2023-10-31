@@ -1,4 +1,3 @@
-import JWT from "jsonwebtoken";
 export interface Defaults {
     iss?: string;
     sub?: string;
@@ -9,11 +8,11 @@ export interface Defaults {
     jti?: string;
     kid?: string;
 }
-export declare class JWT {
+export declare class Jwt {
     private secretKey;
     private defaults;
     constructor();
     produce(payload: any): Promise<void>;
     consume(token: string): Promise<void>;
 }
-export default JWT;
+export default Jwt;

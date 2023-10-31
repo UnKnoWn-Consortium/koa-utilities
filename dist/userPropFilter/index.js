@@ -1,12 +1,9 @@
-"use strict";
 /**
  * Koa user role filter factory
  * Koa Utilities
  * Created by Thomas Sham on 20/9/2020.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.userPropFilterFactory = void 0;
-function userPropFilterFactory(path = "state.user", inValues) {
+export function userPropFilterFactory(path = "state.user", inValues) {
     /*if (!inValues){
         throw Error("value has to be a string or an array");
     }*/
@@ -25,6 +22,5 @@ function userPropFilterFactory(path = "state.user", inValues) {
         ctx.throw(401);
     };
 }
-exports.userPropFilterFactory = userPropFilterFactory;
-exports.default = userPropFilterFactory;
+export default userPropFilterFactory;
 //# sourceMappingURL=index.js.map

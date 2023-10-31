@@ -14,7 +14,7 @@ export interface Defaults {
     kid?: string; // Key-ID
 }
 
-export class JWT {
+export class Jwt {
     private secretKey: KeyObject;
     private defaults: () => Defaults;
 
@@ -35,4 +35,4 @@ export class JWT {
     }
 }
 
-export default JWT;
+export default Jwt;

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/tokenIssuer/index.ts"],"names":[],"mappings":";;;;;;AAAA,mCAA6C;AAApC,iHAAA,OAAO,OAAU;AAC1B,6BAAuC;AAA9B,2GAAA,OAAO,OAAO"}
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/tokenIssuer/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,IAAI,MAAM,EAAE,MAAM,aAAa,CAAC;AAChD,OAAO,EAAE,OAAO,IAAI,GAAG,EAAE,MAAM,UAAU,CAAC"}

@@ -6,7 +6,7 @@
 
 import { Middleware, } from "koa";
 
-import PASETO from "../../tokenIssuer/PASETO.js";
+import Paseto from "../../tokenIssuer/paseto.js";
 
 export function localAuthenticatorFactory (
     PasetoKey: string,
@@ -18,7 +18,7 @@ export function localAuthenticatorFactory (
         throw "paseto key required";
     }
 
-    const tokenIssuer = new PASETO(
+    const tokenIssuer = new Paseto(
         PasetoKey,
         () => ({})
     );
@@ -47,15 +47,12 @@ export function localAuthenticatorFactory (
             ctx.cookies.get(typeof acceptCookie === "string" ? acceptCookie : "authorization") ??
             ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
 
-        let user;
         try {
-            user = await tokenIssuer.consume(ctx.state.token);
-        } catch ({ message }) {
+            ctx.state.user = await tokenIssuer.consume(ctx.state.token);
+        } catch ({ message }: any) {
             await throwErr(400, message);
             return;
         }
-
-        ctx.state.user = user;
 
         await next();
     }

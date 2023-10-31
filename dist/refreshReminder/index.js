@@ -1,10 +1,8 @@
-"use strict";
 /**
  * Koa refresh reminder middleware factory
  * Koa Utilities
  * Created by Thomas Sham on 20/9/2020.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 function refreshReminderFactory() {
     return async function refreshReminder(ctx, next) {
         await next();
@@ -15,5 +13,5 @@ function refreshReminderFactory() {
         }
     };
 }
-exports.default = refreshReminderFactory;
+export default refreshReminderFactory;
 //# sourceMappingURL=index.js.map

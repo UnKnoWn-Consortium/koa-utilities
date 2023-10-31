@@ -1,16 +1,10 @@
-"use strict";
 /**
  * Koa remote authenticator middleware factory
  * Koa Utilities
  * Created by Thomas Sham on 2/10/2020.
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.remoteAuthenticatorFactory = void 0;
-const got_1 = __importDefault(require("got"));
-function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryString = false, errorHandler) {
+import got from "got";
+export function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryString = false, errorHandler) {
     if (!path) {
         throw "path for remote authentication required";
     }
@@ -33,7 +27,7 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
             ctx.query[typeof acceptQueryString === "string" ? acceptQueryString : "authorization"];
         let response;
         try {
-            response = await (0, got_1.default)(path, {
+            response = await got(path, {
                 "method": "GET",
                 "headers": {
                     "Accept": "application/json",
@@ -59,6 +53,5 @@ function remoteAuthenticatorFactory(path, acceptCookie = false, acceptQueryStrin
         await next();
     };
 }
-exports.remoteAuthenticatorFactory = remoteAuthenticatorFactory;
-exports.default = remoteAuthenticatorFactory;
+export default remoteAuthenticatorFactory;
 //# sourceMappingURL=index.js.map

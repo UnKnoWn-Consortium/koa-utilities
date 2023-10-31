@@ -1,2 +1,2 @@
-export { default as PASETO } from "./PASETO";
-export { default as JWT } from "./JWT";
+export { default as PASETO } from "./paseto.js";
+export { default as JWT } from "./jwt.js";

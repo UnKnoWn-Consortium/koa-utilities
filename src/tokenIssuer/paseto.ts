@@ -13,7 +13,7 @@ export interface Defaults {
     kid?: string; // Key-ID
 }
 
-export class PASETO {
+export class Paseto {
     private secretKey: KeyObject;
     private defaults: () => Defaults;
 
@@ -34,4 +34,4 @@ export class PASETO {
     }
 }
 
-export default PASETO;
+export default Paseto;

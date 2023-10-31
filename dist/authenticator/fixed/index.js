@@ -1,12 +1,9 @@
-"use strict";
 /**
  * Koa fixed authenticator middleware factory
  * Koa Utilities
  * Created by Thomas Sham on 22/10/2020.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.fixedAuthenticatorFactory = void 0;
-function fixedAuthenticatorFactory(token, acceptCookie = false, acceptQueryString = false, errorHandler) {
+export function fixedAuthenticatorFactory(token, acceptCookie = false, acceptQueryString = false, errorHandler) {
     if (!token) {
         throw "token required";
     }
@@ -34,6 +31,5 @@ function fixedAuthenticatorFactory(token, acceptCookie = false, acceptQueryStrin
         await next();
     };
 }
-exports.fixedAuthenticatorFactory = fixedAuthenticatorFactory;
-exports.default = fixedAuthenticatorFactory;
+export default fixedAuthenticatorFactory;
 //# sourceMappingURL=index.js.map

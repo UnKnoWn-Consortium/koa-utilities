@@ -12,7 +12,7 @@ import authenticator from "koa-utilities/dist/authenticator/fixed";
 authenticator(<FIXED_TOKEN>, acceptCookie: boolean, acceptQueryString: boolean); 
 ```
 
-* Local PASETO token
+* Local Paseto token
 
 It also accepts a second and a third augment at ```acceptCookie``` and ```acceptQueryString``` that controls whether 
 token included in cookie and then appended as query string is accepted as backup. 
@@ -22,7 +22,7 @@ import authenticator from "koa-utilities/dist/authenticator/local";
 authenticator(<PASETO_TOKEN>, acceptCookie: boolean, acceptQueryString: boolean); 
 ```
 
-* Remote PASETO token
+* Remote Paseto token
 
 It also accepts a second and a third augment at ```acceptCookie``` and ```acceptQueryString``` that controls whether 
 token included in cookie and then appended as query string is accepted as backup.
@@ -34,10 +34,10 @@ authenticator(<REMOTE_PATH>, acceptCookie: boolean, acceptQueryString: boolean);
 
 ### Token Issuer
 
-* PASETO Token
+* Paseto Token
 
 ```javascript
-import Issuer from "koa-utilities/dist/tokenIssuer/PASETO";
+import Issuer from "koa-utilities/dist/tokenIssuer/Paseto";
 const pasetoIssuer = new Issuer(
     <PASETO_HEX_KEY>,
     () => ({})
@@ -47,7 +47,7 @@ const pasetoIssuer = new Issuer(
 * JSON Web Token (Work-in-Progress)
 
 ```javascript
-import Issuer from "koa-utilities/dist/tokenIssuer/JWT";
+import Issuer from "koa-utilities/dist/tokenIssuer/Jwt";
 const jwtIssuer = new Issuer(
     <JWT_KEY>,
     () => ({})
