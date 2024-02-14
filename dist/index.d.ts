@@ -1,4 +1,4 @@
-export { fixedAuthenticatorFactory as fixedAuthenticator, localAuthenticatorFactory as localAuthenticator, remoteAuthenticatorFactory as remoteAuthenticator, } from "./authenticator/index.js";
+export { fixedAuthenticatorFactory as fixedAuthenticator, localAuthenticatorFactory as localAuthenticator, remoteAuthenticatorFactory as remoteAuthenticator, remoteWSAuthenticatorFactory as remoteWSAuthenticator, } from "./authenticator/index.js";
 export { PASETO, JWT } from "./tokenIssuer/index.js";
 export { default as imageTransformer } from "./imageTransformer/index.js";
 export { default as logger } from "./logger/index.js";

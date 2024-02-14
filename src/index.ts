@@ -2,6 +2,7 @@ export {
     fixedAuthenticatorFactory as fixedAuthenticator,
     localAuthenticatorFactory as localAuthenticator,
     remoteAuthenticatorFactory as remoteAuthenticator,
+    remoteWSAuthenticatorFactory as remoteWSAuthenticator,
 } from "./authenticator/index.js";
 
 export {
